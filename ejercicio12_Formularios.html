@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+<title>Ejercicio 12 - Formulario de alta</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style type="text/css">
+	/*La fuente de toda la pag.
+	y un color de fondo para diferenciarla del contenido
+	*/
+	body {
+		font: 13px/1.6 Tahoma, sans-serif;
+		background: #F5F5F5;
+	}
+		
+	/*Se centra el formulario asignandole un tamaño fijo, y unos margenes
+	se le da un color de fondo para diferenciar el contenido principal del resto de la pagina
+	*/
+	#contenedor{
+		width:768px;
+		margin:1em auto;
+		background: #FFF;
+		border: 1px solid silver;
+		padding: 1em;
+	}
+	
+	/*Para los Asteriscos rojos*/
+	.requerido{
+		color:#C00;
+		font-weight:bold;
+		font-size:1.3em;
+	}
+	
+	/*Para el titulo del formulario*/
+	h2 {
+		font: normal 2em arial, sans-serif;
+		margin: 0;
+	}
+	
+	/*Para ocultar las ayudas*/
+	.ayuda{
+		display:none;
+	}
+	
+	/*Para los titulos de cada seccion*/
+	.titulo{
+		font-weight:bold;
+	}
+	
+	/*Para quitar las viñetas de la lista*/
+	ul{
+		list-style:none;
+		margin:0;
+		padding:0;
+	}
+	
+	/*Colocamos los label debajo de los input*/
+	div span label{
+		display:block;
+		font: normal 0.8em arial, sans-serif;
+		color: #333;
+	}
+	
+	/*Creamos dos columnas (izq-der)
+	Tambien va unido con el width:46% de cada li
+	*/
+	
+	.izquierda{
+		float:left;
+		clear:left;
+	}
+	
+	.derecha{
+		float:right;
+		clear:right;
+	}	
+	
+	/*este va junto con las creacion de las columnas
+	para que cada li ocupe el 46% de la pagina 
+	(de este modo tenemos dos columanas izq y der, c/u de 46% de ancho)
+	*/
+	ul li {
+		margin: 0.5em 0;
+		padding: 0.5em;
+		width: 46%;
+	}	
+	
+	/*Resaltar cada seccion cuando se pasa el mouse*/
+	ul li:hover{
+			background-color:#FF9;
+	}
+	
+	/*Hacemos los span flotantes, para crear columnas dentro
+	de las columnas
+	*/
+	
+	ul li div span {
+		float: left;
+		padding: 0.3em 0;
+	}
+	
+	/*Se crean diferntes tamaños para cada campo*/
+	
+	.tercio{
+		width:33%;
+	}
+	
+	.dostercios{
+		width:66%;
+	}
+	
+	.mitad{
+		width:50%;
+	}
+	
+	.completo{
+		width:100%;
+	}
+	
+	/*Agregar un pequeño relleno en los input 
+	para que se vea mejor cuando se escribe*/
+	input{
+		padding:.2em;
+	}
+	
+	/*Resaltar el input cuando tiene foco*/
+	input:focus{
+		border:2px solid #E6B700;
+	}
+	
+	/*Se le asigna un tamaño fijo a los input y select*/
+	
+	input#apellido1, input#apellido2, input#direccion, input#email {
+		width: 260px;
+	}
+	
+	input#codigopostal {
+		width: 80px;
+	}
+	
+	input#telefonofijo, input#telefonomovil {
+		width: 135px;
+	}
+	
+	select#provincia {
+		width: 90px;
+	}
+	
+	select#pais {
+		width: 150px;
+	}		
+	
+	/*En la parte del boton, se usan los sig estilos para:
+		-Obligar que este abajo (clear)
+		-Que el boton este a la derecha(float y text-align)
+		-Agregar el borde superior de la seccion del boton
+		-Hacer que la seccion del boton ocupe toda la parte de abajo (width:100%)
+	*/
+	.boton{
+		clear:both;
+		float:none;
+		text-align: right;
+		border-top: 2px solid #CCC;
+		width: 100%;
+		padding: 1em 0;
+		margin-top: 1em;		
+	}
+	
+	.boton:hover{
+		background-color: transparent;
+	}
+	
+	/*Este se pone así para que al agrandar la fuente, se agrande el boton*/
+	.boton input{
+		font-size: 1.3em;
+	}
+
+	/*SEGUNDA PARTE DEl EJERCICIO*/	
+	
+	/*dejar todo en 1 columna*/
+	.izquierda,.derecha{
+		float:none;
+		width:auto;
+	}
+	
+	/*Este sirve para que la parte de direccion, baje y se posiscione bien,
+	y para que funcione el color (hover) sobre cada seccion*/
+	ul li{
+		overflow:hidden;
+	}
+	/*Los titulos de cada seccion los dejamos flotantes, 
+	y les asignamos un ancho de 150px*/
+	.titulo{
+		float:left;
+		width:150px;
+	}
+	
+	/*A cada seccion le damos un margen(separacion entre cajas)
+	de 160px, con eso se ubican al lado de los titulos flotantes y con 10px de separacion.*/
+	ul li div{
+		margin-left:160px;
+	}
+	
+	/*Agregamos un borde superior a cada seccion para separarlas
+	Se posiciona de forma relativa, pero sin top ni left, para 
+	poder posicionar elementos hijos
+	*/
+	ul li{
+		border-top: 1px solid #CCC;
+		position:relative;
+	}
+	
+	/*PARTE FINAL DEL EJERCICIO*/
+	
+	/*Hacemos que aparescan los parrafos de ayuda al pasar el mouse encima de cada seccion
+	Se posiciona de forma absoluta con respecto a su caja contenedora.
+	Para esto, a su caja contenedora (ul li) es necesario darle un posicionamiento relative
+	Estas ayudas se posicionan con right:0, para que se ubiquen a la derecha, si se les pone
+	left:0, se ubican sobre los label e input
+	*/
+	ul li:hover p.ayuda{
+		display:block;
+		width:150px;
+		position:absolute;
+		top:0;
+		right:0;
+		margin:0.3em;
+	}
+	
+	h2 {
+		margin-bottom: 0.3em;
+	}
+	
+	ul li {
+		margin: 0;
+		padding: 1em;
+	}
+	
+	/*Hace que los label se muestren en dos partes y los une un poco a los input*/
+	
+	ul li label.titulo {
+		text-align: right;
+		width: 100px;
+	}	
+	
+	/* este sirve para pegar mas los input a los label*/
+	ul li div {
+		margin-left: 110px;
+		overflow: hidden;
+	}
+	
+	
+
+</style>
+</head>
+
+<body>
+<div id="contenedor">
+
+<h2>Formulario de alta</h2>
+
+<form method="post" action="#">
+<ul>
+<li class="izquierda">
+  <label class="titulo" for="nombre">Nombre y apellidos <span class="requerido">*</span></label>
+  <div>
+    <span class="dostercios">
+      <input id="nombre" name="nombre" value="" />
+      <label for="nombre">Nombre</label>
+    </span>
+
+    <span class="completo">
+      <input id="apellido1" name="apellido1" value="" />
+      <label for="apellido1">Primer apellido</label>
+    </span>
+    
+    <span class="completo">
+      <input id="apellido2" name="apellido2" value="" />
+      <label for="apellido2">Segundo apellido</label>
+    </span>
+  </div>
+
+  <p class="ayuda">No te olvides de escribir también tu segundo apellido</p>
+</li>
+
+<li class="derecha">
+  <label class="titulo" for="direccion">Dirección <span class="requerido">*</span></label>
+
+  <div>
+    <span class="completo">
+      <input id="direccion" name="direccion" value="" />
+      <label for="direccion">Calle, número, piso, puerta</label>
+    </span>
+
+    <span class="tercio">
+      <input id="codigopostal" name="codigopostal" value="" />
+      <label for="codigopostal">Código postal</label>
+    </span>
+    
+    <span class="dostercios">
+      <input id="municipio" name="municipio" value="" />
+      <label for="municipio">Municipio</label>
+    </span>
+    
+    <span class="tercio">
+      <select id="provincia" name="provincia">
+        <option value=""></option>
+        <option value="provincia1">Provincia 1</option>
+        <option value="provincia2">Provincia 2</option>
+        <option value="provincia3">Provincia 3</option>
+      </select>
+      <label for="provincia">Provincia</label>
+    </span>
+    
+    <span class="dostercios">
+      <select id="pais" name="pais">
+        <option value=""></option>
+        <option value="pais1">País 1</option>
+        <option value="pais2">País 2</option>
+        <option value="pais3">País 3</option>
+      </select>
+      <label for="pais">País</label>
+    </span>
+  </div>
+
+  <p class="ayuda">El código postal es imprescindible para poder recibir los pedidos</p>
+</li>
+
+<li class="izquierda">
+  <label class="titulo" for="email">Email</label>
+
+  <div>
+    <span class="completo">
+      <input id="email" name="email" value="" />
+    </span>
+  </div>
+
+  <p class="ayuda">Asegúrate de que sea válido</p>
+</li>
+
+<li class="derecha">
+  <label class="titulo" for="telefonofijo">Teléfono <span class="requerido">*</span></label>
+
+  <div>
+    <span class="mitad">
+      <input id="telefonofijo" name="telefonofijo" value="" />
+      <label for="telefonofijo">Fijo</label>
+    </span>
+
+    <span class="mitad">
+      <input id="telefonomovil" name="telefonomovil" value="" />
+      <label for="telefonomovil">Móvil</label>
+    </span>
+  </div>
+
+  <p class="ayuda">Sin prefijo de país y sin espacios en blanco</p>
+</li>
+
+<li class="boton">
+  <input id="alta" type="submit" value="Darme de alta &rarr;" />
+</li>
+
+</ul>
+</form>
+
+</div>
+</body>
+</html>
